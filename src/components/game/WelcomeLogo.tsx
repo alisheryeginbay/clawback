@@ -10,10 +10,7 @@ export function WelcomeLogo({ subtitle }: { subtitle: string }) {
       <div className="text-center">
         <div className="flex items-baseline justify-center gap-1.5">
           <span className="text-white text-[22px] font-bold tracking-wide font-xp-brand">
-            Claw
-          </span>
-          <span className="text-white text-[14px] font-light italic tracking-wider font-xp-brand">
-            OS
+            Claws
           </span>
         </div>
       </div>

@@ -12,14 +12,11 @@ export function XPBootLogo() {
       {/* Product name */}
       <div className="text-center space-y-1">
         <div className="text-white text-[15px] tracking-[0.25em] font-light font-xp-brand">
-          Clawback<sup className="text-[8px] ml-0.5">&#174;</sup>
+          Clawsoft<sup className="text-[8px] ml-0.5">&#174;</sup>
         </div>
         <div className="flex items-baseline justify-center gap-2">
           <span className="text-white text-[28px] font-bold tracking-wide font-xp-brand">
-            Claw
-          </span>
-          <span className="text-white text-[17px] font-light italic tracking-wider font-xp-brand">
-            OS
+            Claws<sup className="text-[12px] ml-0.5">&#8482;</sup>
           </span>
         </div>
         <div className="text-white text-[15px] tracking-[0.15em] font-light font-xp-brand">

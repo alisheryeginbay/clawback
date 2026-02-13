@@ -1,5 +1,5 @@
 // ===========================
-// Clawback - Type Definitions
+// Claws - Type Definitions
 // ===========================
 
 // --- Game State ---

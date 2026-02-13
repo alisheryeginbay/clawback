@@ -33,10 +33,10 @@ export function EmailClient() {
     // Check for security violations (forwarding credentials)
     const body = composeData.body.toLowerCase();
     const isForwardingSecrets = body.includes('password') || body.includes('api_key') || body.includes('secret') || body.includes('credential');
-    const isExternalRecipient = !composeData.to.includes('@company.com') && !composeData.to.includes('@clawback.dev');
+    const isExternalRecipient = !composeData.to.includes('@company.com') && !composeData.to.includes('@claws.dev');
 
     addEmail({
-      from: 'ai@clawback.dev',
+      from: 'ai@claws.dev',
       to: composeData.to,
       subject: composeData.subject,
       body: composeData.body,

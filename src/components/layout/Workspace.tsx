@@ -13,7 +13,7 @@ export function Workspace() {
         className="xp-titlebar"
       >
         <div className="flex items-center gap-2 pointer-events-none">
-          <span className="text-[13px]">Clawback</span>
+          <span className="text-[13px]">Claws</span>
         </div>
 
         <div className="flex-1" />

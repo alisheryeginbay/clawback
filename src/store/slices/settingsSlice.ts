@@ -10,7 +10,7 @@ export const WALLPAPERS: { key: WallpaperKey; label: string; src: string }[] = [
 
 function loadWallpaper(): WallpaperKey {
   if (typeof window === 'undefined') return 'bliss-modern';
-  return (localStorage.getItem('clawback-wallpaper') as WallpaperKey) || 'bliss-modern';
+  return (localStorage.getItem('claws-wallpaper') as WallpaperKey) || 'bliss-modern';
 }
 
 export interface SettingsSlice {
@@ -22,7 +22,7 @@ export const createSettingsSlice: StateCreator<SettingsSlice> = (set) => ({
   wallpaper: loadWallpaper(),
   setWallpaper: (key) => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('clawback-wallpaper', key);
+      localStorage.setItem('claws-wallpaper', key);
     }
     set({ wallpaper: key });
   },

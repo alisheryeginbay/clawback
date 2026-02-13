@@ -6,7 +6,7 @@ export class EmailSystem {
     const state = useGameStore.getState();
 
     state.addEmail({
-      from: 'ai@clawback.dev',
+      from: 'ai@claws.dev',
       to,
       subject,
       body,
@@ -16,7 +16,7 @@ export class EmailSystem {
     });
 
     // Check for security issues
-    const isExternal = !to.includes('@company.com') && !to.includes('@clawback.dev');
+    const isExternal = !to.includes('@company.com') && !to.includes('@claws.dev');
     const hasSensitiveData = body.toLowerCase().includes('password') ||
       body.toLowerCase().includes('api_key') ||
       body.toLowerCase().includes('secret');
