@@ -14,12 +14,12 @@ const ICON_MAP: Record<NotificationType, typeof Info> = {
   security: ShieldAlert,
 };
 
-const COLOR_MAP: Record<NotificationType, string> = {
-  info: 'border-claw-blue text-claw-blue',
-  success: 'border-claw-green text-claw-green',
-  warning: 'border-claw-orange text-claw-orange',
-  error: 'border-claw-red text-claw-red',
-  security: 'border-claw-red text-claw-red',
+const ICON_COLORS: Record<NotificationType, string> = {
+  info: 'text-[#0054E3]',
+  success: 'text-[#399639]',
+  warning: 'text-claw-orange',
+  error: 'text-claw-red',
+  security: 'text-claw-red',
 };
 
 export function NotificationTray() {
@@ -27,7 +27,7 @@ export function NotificationTray() {
   const dismissNotification = useGameStore((s) => s.dismissNotification);
   const [exitingIds, setExitingIds] = useState<Set<string>>(new Set());
 
-  const visible = notifications.filter((n) => !n.dismissed).slice(-5);
+  const visible = notifications.filter((n) => !n.dismissed).slice(-3);
 
   const triggerExit = useCallback((id: string) => {
     setExitingIds((prev) => new Set(prev).add(id));
@@ -53,7 +53,7 @@ export function NotificationTray() {
   if (visible.length === 0) return null;
 
   return (
-    <div className="fixed top-2 right-2 z-50 flex flex-col gap-2 w-80">
+    <div className="fixed bottom-14 right-4 z-50 flex flex-col gap-2 w-80">
       {visible.map((notification) => {
         const Icon = ICON_MAP[notification.type];
         const isExiting = exitingIds.has(notification.id);
@@ -61,26 +61,25 @@ export function NotificationTray() {
           <div
             key={notification.id}
             className={cn(
-              'bg-claw-surface border-l-2 p-3 shadow-lg shadow-black/30',
-              isExiting ? 'slide-out-right' : 'slide-in-right',
-              COLOR_MAP[notification.type]
+              'xp-balloon',
+              isExiting ? 'slide-out-right' : 'slide-in-right'
             )}
           >
-            <div className="flex items-start gap-2">
-              <Icon size={14} className="mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3">
+              <Icon size={18} className={cn('mt-0.5 flex-shrink-0', ICON_COLORS[notification.type])} />
               <div className="flex-1 min-w-0">
-                <div className="text-xs font-bold text-claw-text">
+                <div className="text-sm font-bold text-[#000000]">
                   {notification.title}
                 </div>
-                <div className="text-xs text-claw-muted mt-0.5">
+                <div className="text-xs text-[#000000]/70 mt-0.5">
                   {notification.message}
                 </div>
               </div>
               <button
                 onClick={() => triggerExit(notification.id)}
-                className="text-claw-muted hover:text-claw-text flex-shrink-0"
+                className="text-[#808080] hover:text-[#000000] flex-shrink-0 transition-colors"
               >
-                <X size={12} />
+                <X size={14} />
               </button>
             </div>
           </div>

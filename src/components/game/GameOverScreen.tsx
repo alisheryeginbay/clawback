@@ -6,12 +6,12 @@ import { ScoringEngine } from '@/systems/scoring/ScoringEngine';
 import { cn } from '@/lib/utils';
 
 const GRADE_COLORS: Record<string, string> = {
-  S: 'text-claw-yellow glow-green',
-  A: 'text-claw-green',
-  B: 'text-claw-blue',
+  S: 'text-[#FFD700]',
+  A: 'text-[#0066CC]',
+  B: 'text-[#0066CC]',
   C: 'text-claw-orange',
   D: 'text-claw-red',
-  F: 'text-claw-red glow-red',
+  F: 'text-claw-red',
 };
 
 export function GameOverScreen() {
@@ -25,47 +25,56 @@ export function GameOverScreen() {
   const summary = scoringEngine.getEndGameSummary();
 
   return (
-    <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
-      <div className="bg-claw-surface border border-claw-border p-8 max-w-lg w-full mx-4 font-mono">
-        <div className="text-center mb-6">
-          <div className="text-claw-red text-xl font-bold mb-2">SYSTEM SHUTDOWN</div>
-          <div className="text-claw-muted text-xs">
-            {score.securityScore <= 0
-              ? 'Security breach detected. System compromised.'
-              : 'End of shift. Performance review follows.'}
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+      <div className="xp-dialog overflow-hidden max-w-lg w-full">
+        {/* XP Title Bar */}
+        <div className="xp-titlebar">
+          <span>System Offline</span>
+        </div>
+
+        <div className="p-8 bg-[var(--color-xp-face)]">
+          <div className="text-center mb-6">
+            <div className="text-claw-red text-xl font-bold mb-2">SYSTEM SHUTDOWN</div>
+            <div className="text-[#808080] text-sm">
+              {score.securityScore <= 0
+                ? 'Security breach detected. System compromised.'
+                : 'End of shift. Performance review follows.'}
+            </div>
           </div>
-        </div>
 
-        {/* Grade */}
-        <div className="text-center mb-6">
-          <div className="text-[10px] text-claw-muted uppercase tracking-wider mb-1">Final Grade</div>
-          <div className={cn('text-6xl font-bold', GRADE_COLORS[summary.grade] || 'text-claw-text')}>
-            {summary.grade}
+          {/* Grade */}
+          <div className="text-center mb-6">
+            <div className="text-[11px] text-[#808080] uppercase tracking-wider mb-2">Final Grade</div>
+            <div
+              className={cn('text-6xl font-bold', GRADE_COLORS[summary.grade] || 'text-[#000000]')}
+            >
+              {summary.grade}
+            </div>
           </div>
-        </div>
 
-        {/* Stats */}
-        <div className="space-y-2 mb-6">
-          <StatRow label="Total Score" value={summary.totalScore.toLocaleString()} color="text-claw-purple" />
-          <StatRow label="Requests Completed" value={String(summary.requestsCompleted)} color="text-claw-green" />
-          <StatRow label="Requests Failed" value={String(summary.requestsFailed)} color="text-claw-red" />
-          <StatRow label="Requests Expired" value={String(summary.requestsExpired)} color="text-claw-orange" />
-          <StatRow label="Max Streak" value={String(summary.maxStreak)} color="text-claw-orange" />
-          <StatRow label="Security Score" value={`${summary.securityScore}/100`} color={summary.securityScore > 80 ? 'text-claw-green' : 'text-claw-red'} />
-          <StatRow label="Days Played" value={String(summary.daysPlayed)} color="text-claw-text" />
-        </div>
+          {/* Stats */}
+          <div className="space-y-0 mb-6 border border-[#ACA899] bg-white">
+            <StatRow label="Total Score" value={summary.totalScore.toLocaleString()} color="text-[#7B68EE]" />
+            <StatRow label="Requests Completed" value={String(summary.requestsCompleted)} color="text-[#0066CC]" />
+            <StatRow label="Requests Failed" value={String(summary.requestsFailed)} color="text-claw-red" />
+            <StatRow label="Requests Expired" value={String(summary.requestsExpired)} color="text-claw-orange" />
+            <StatRow label="Max Streak" value={String(summary.maxStreak)} color="text-claw-orange" />
+            <StatRow label="Security Score" value={`${summary.securityScore}/100`} color={summary.securityScore > 80 ? 'text-[#0066CC]' : 'text-claw-red'} />
+            <StatRow label="Days Played" value={String(summary.daysPlayed)} color="text-[#000000]" />
+          </div>
 
-        {/* Restart */}
-        <div className="flex justify-center">
-          <button
-            onClick={() => {
-              engine.stop();
-              useGameStore.getState().setPhase('start');
-            }}
-            className="px-6 py-2 bg-claw-green/10 border border-claw-green text-claw-green text-sm hover:bg-claw-green/20 transition-colors"
-          >
-            [ RESTART ]
-          </button>
+          {/* Restart */}
+          <div className="flex justify-center pt-4 border-t border-[#ACA899]">
+            <button
+              onClick={() => {
+                engine.stop();
+                useGameStore.getState().setPhase('start');
+              }}
+              className="xp-primary-button px-8 py-2.5"
+            >
+              Restart
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -74,8 +83,8 @@ export function GameOverScreen() {
 
 function StatRow({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div className="flex justify-between items-center py-1 border-b border-claw-border/30">
-      <span className="text-xs text-claw-muted">{label}</span>
+    <div className="flex justify-between items-center py-1.5 px-3 border-b border-[#ECE9D8] last:border-b-0">
+      <span className="text-sm text-[#000000]">{label}</span>
       <span className={cn('text-sm font-bold', color)}>{value}</span>
     </div>
   );

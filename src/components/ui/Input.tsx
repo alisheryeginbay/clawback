@@ -13,13 +13,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref}
         className={cn(
-          'w-full font-mono transition-colors duration-150',
+          'w-full transition-colors duration-150',
           'focus:outline-none',
-          'placeholder:text-claw-muted/50',
+          'placeholder:text-[#808080]/50',
           {
-            'bg-claw-surface border border-claw-border px-3 py-1.5 text-sm text-claw-text focus:border-claw-green/50':
+            'xp-input px-3 py-1.5 text-sm text-[#000000]':
               variant === 'default',
-            'bg-transparent text-claw-green text-sm caret-claw-green border-none':
+            'bg-transparent font-mono text-[#00FF00] text-sm caret-[#00FF00] border-none':
               variant === 'terminal',
           },
           className

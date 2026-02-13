@@ -14,17 +14,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          'inline-flex items-center justify-center font-mono transition-all duration-150',
-          'focus:outline-none focus:ring-1 focus:ring-claw-green/50',
+          'inline-flex items-center justify-center transition-all duration-200',
+          'focus-visible:outline-1 focus-visible:outline-dotted focus-visible:outline-[#000000] focus-visible:outline-offset-[-4px]',
           'disabled:opacity-50 disabled:pointer-events-none',
           {
-            'bg-claw-surface border border-claw-border hover:border-claw-green/50 hover:bg-claw-surface-alt text-claw-text':
+            'xp-button':
               variant === 'default',
-            'bg-transparent hover:bg-claw-surface-alt text-claw-muted hover:text-claw-text':
+            'bg-transparent hover:bg-[#316AC5]/10 text-[#000000] hover:text-[#000000] rounded-sm':
               variant === 'ghost',
-            'bg-claw-red/10 border border-claw-red/30 hover:bg-claw-red/20 text-claw-red':
+            'xp-button !border-claw-red/50 hover:!border-claw-red text-claw-red':
               variant === 'danger',
-            'bg-claw-green/10 border border-claw-green/30 hover:bg-claw-green/20 text-claw-green':
+            'xp-button !border-[#0054E3] text-[#003C74]':
               variant === 'success',
           },
           {

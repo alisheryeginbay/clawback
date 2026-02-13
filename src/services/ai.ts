@@ -1,6 +1,7 @@
 import { useGameStore } from '@/store/gameStore';
 import { getRandomDialogue } from '@/systems/npc/dialogues';
 import type { NpcMood, GameRequest, NpcPersona } from '@/types';
+import { callOpenRouter, isOpenRouterAvailable, resetOpenRouterCache } from '@/services/openrouter';
 
 type MessageType = 'mood' | 'initial' | 'completion' | 'failure';
 
@@ -13,7 +14,6 @@ interface GenerateParams {
   recentMessages?: string[];
 }
 
-let aiAvailable = true;
 let lastCallTime = 0;
 const pendingRequests = new Set<string>();
 
@@ -91,8 +91,7 @@ function getFallback(params: GenerateParams): string {
 }
 
 export async function generateNpcMessage(params: GenerateParams): Promise<string> {
-  // Skip if AI unavailable for this session
-  if (!aiAvailable) {
+  if (!isOpenRouterAvailable()) {
     return getFallback(params);
   }
 
@@ -115,29 +114,17 @@ export async function generateNpcMessage(params: GenerateParams): Promise<string
     const systemPrompt = buildSystemPrompt(params.npcId);
     const userMessage = buildUserMessage(params);
 
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemPrompt,
-        userMessage,
-        maxTokens: 80,
-        temperature: 0.9,
-      }),
+    const result = await callOpenRouter({
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userMessage },
+      ],
+      maxTokens: 80,
+      temperature: 0.9,
+      timeoutMs: 8000,
     });
 
-    if (res.status === 503) {
-      // No API key configured — disable AI for the session
-      aiAvailable = false;
-      return getFallback(params);
-    }
-
-    if (!res.ok) {
-      return getFallback(params);
-    }
-
-    const data = await res.json();
-    return data.text || getFallback(params);
+    return result.text || getFallback(params);
   } catch {
     return getFallback(params);
   } finally {
@@ -146,7 +133,7 @@ export async function generateNpcMessage(params: GenerateParams): Promise<string
 }
 
 export function resetAiService(): void {
-  aiAvailable = true;
   lastCallTime = 0;
   pendingRequests.clear();
+  resetOpenRouterCache();
 }

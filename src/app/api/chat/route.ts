@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
 interface ChatRequestBody {
-  systemPrompt: string;
-  userMessage: string;
+  messages: ChatMessage[];
   maxTokens?: number;
   temperature?: number;
+  jsonMode?: boolean;
 }
 
 export async function POST(req: NextRequest) {
@@ -28,12 +33,30 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { systemPrompt, userMessage, maxTokens = 80, temperature = 0.9 } = body;
+  const { messages, maxTokens = 80, temperature = 0.9, jsonMode = false } = body;
+
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return NextResponse.json(
+      { error: 'invalid_body', message: 'messages array is required' },
+      { status: 400 }
+    );
+  }
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
+  const timeout = setTimeout(() => controller.abort(), 12000);
 
   try {
+    const fetchBody: Record<string, unknown> = {
+      model,
+      messages,
+      max_tokens: maxTokens,
+      temperature,
+    };
+
+    if (jsonMode) {
+      fetchBody.response_format = { type: 'json_object' };
+    }
+
     const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -42,15 +65,7 @@ export async function POST(req: NextRequest) {
         'HTTP-Referer': 'https://clawback.dev',
         'X-Title': 'Clawback',
       },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userMessage },
-        ],
-        max_tokens: maxTokens,
-        temperature,
-      }),
+      body: JSON.stringify(fetchBody),
       signal: controller.signal,
     });
 
