@@ -2,9 +2,7 @@ import type { NpcPersona, Difficulty, RequestTier, GameRequest } from '@/types';
 import { pickFallbackNpcs } from '@/data/fallback-npcs';
 import { SCENARIOS, createRequestFromScenario } from '@/systems/requests/scenarios';
 import { generateId } from '@/lib/utils';
-import { callOpenRouter, isOpenRouterAvailable } from '@/services/openrouter';
-
-let generationAvailable = true;
+import { callOpenRouter, isOpenRouterAvailable, resetOpenRouterCache } from '@/services/openrouter';
 
 interface GenerateRequestParams {
   npc: NpcPersona;
@@ -82,7 +80,7 @@ export async function generateNpcCandidates(
   difficulty: Difficulty,
   count = 6
 ): Promise<{ npcs: NpcPersona[]; isGenerated: boolean }> {
-  if (!generationAvailable || !isOpenRouterAvailable()) {
+  if (!isOpenRouterAvailable()) {
     return { npcs: pickFallbackNpcs(count), isGenerated: false };
   }
 
@@ -119,10 +117,7 @@ Respond with JSON: { "npcs": [{ "name": string, "role": string, "description": s
     }
 
     return { npcs: pickFallbackNpcs(count), isGenerated: false };
-  } catch (err) {
-    if (err instanceof Error && err.message === 'no_api_key') {
-      generationAvailable = false;
-    }
+  } catch {
     return { npcs: pickFallbackNpcs(count), isGenerated: false };
   }
 }
@@ -130,7 +125,7 @@ Respond with JSON: { "npcs": [{ "name": string, "role": string, "description": s
 export async function generateRequest(
   params: GenerateRequestParams
 ): Promise<{ request: GameRequest; isGenerated: boolean }> {
-  if (!generationAvailable || !isOpenRouterAvailable()) {
+  if (!isOpenRouterAvailable()) {
     return { request: pickFallbackRequest(params), isGenerated: false };
   }
 
@@ -240,10 +235,7 @@ Respond with JSON: { "title": string, "description": string, "tier": ${tier}, "o
     };
 
     return { request, isGenerated: true };
-  } catch (err) {
-    if (err instanceof Error && err.message === 'no_api_key') {
-      generationAvailable = false;
-    }
+  } catch {
     return { request: pickFallbackRequest(params), isGenerated: false };
   }
 }
@@ -272,5 +264,5 @@ function pickFallbackRequest(params: GenerateRequestParams): GameRequest {
 }
 
 export function resetGenerationService(): void {
-  generationAvailable = true;
+  resetOpenRouterCache();
 }

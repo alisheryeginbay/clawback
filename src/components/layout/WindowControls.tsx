@@ -1,6 +1,5 @@
 'use client';
 
-import { useCallback } from 'react';
 import { Minus, Square, X } from 'lucide-react';
 
 export function WindowControls({ className = '' }: { className?: string }) {
@@ -20,7 +19,6 @@ export function WindowControls({ className = '' }: { className?: string }) {
 }
 
 export function useDragWindow() {
-  return useCallback((_e: React.MouseEvent) => {
-    // No-op without Tauri
-  }, []);
+  // No-op without Tauri
+  return (_e: React.MouseEvent) => {};
 }

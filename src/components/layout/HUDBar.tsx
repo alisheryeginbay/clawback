@@ -24,6 +24,13 @@ import {
   MemoryStick,
 } from 'lucide-react';
 
+const RESOURCE_THRESHOLDS = {
+  CRITICAL: 90,
+  WARNING: 75,
+  HIGH: 80,
+  MEDIUM: 50,
+} as const;
+
 const TOOLS: { id: ToolId; icon: typeof Terminal; label: string }[] = [
   { id: 'terminal', icon: Terminal, label: 'Terminal' },
   { id: 'files', icon: FolderOpen, label: 'Files' },
@@ -81,13 +88,13 @@ export function HUDBar() {
   }, [totalUnread, unreadEmails]);
 
   const securityColor =
-    score.securityScore > 80 ? 'text-[#80D0FF]' :
-    score.securityScore > 50 ? 'text-claw-orange' :
+    score.securityScore > RESOURCE_THRESHOLDS.HIGH ? 'text-[#80D0FF]' :
+    score.securityScore > RESOURCE_THRESHOLDS.MEDIUM ? 'text-claw-orange' :
     'text-claw-red';
 
   const getResourceStyle = (value: number) => {
-    const color = value > 80 ? 'text-claw-red' : value > 50 ? 'text-claw-orange' : 'text-white/60';
-    const glow = value > 90 ? 'meter-critical' : value > 75 ? 'meter-warning' : '';
+    const color = value > RESOURCE_THRESHOLDS.HIGH ? 'text-claw-red' : value > RESOURCE_THRESHOLDS.MEDIUM ? 'text-claw-orange' : 'text-white/60';
+    const glow = value > RESOURCE_THRESHOLDS.CRITICAL ? 'meter-critical' : value > RESOURCE_THRESHOLDS.WARNING ? 'meter-warning' : '';
     return { color, glow };
   };
 

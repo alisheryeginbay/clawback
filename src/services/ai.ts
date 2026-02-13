@@ -14,7 +14,6 @@ interface GenerateParams {
   recentMessages?: string[];
 }
 
-let aiAvailable = true;
 let lastCallTime = 0;
 const pendingRequests = new Set<string>();
 
@@ -92,8 +91,7 @@ function getFallback(params: GenerateParams): string {
 }
 
 export async function generateNpcMessage(params: GenerateParams): Promise<string> {
-  // Skip if AI unavailable for this session
-  if (!aiAvailable || !isOpenRouterAvailable()) {
+  if (!isOpenRouterAvailable()) {
     return getFallback(params);
   }
 
@@ -127,10 +125,7 @@ export async function generateNpcMessage(params: GenerateParams): Promise<string
     });
 
     return result.text || getFallback(params);
-  } catch (err) {
-    if (err instanceof Error && err.message === 'no_api_key') {
-      aiAvailable = false;
-    }
+  } catch {
     return getFallback(params);
   } finally {
     pendingRequests.delete(dedupKey);
@@ -138,7 +133,6 @@ export async function generateNpcMessage(params: GenerateParams): Promise<string
 }
 
 export function resetAiService(): void {
-  aiAvailable = true;
   lastCallTime = 0;
   pendingRequests.clear();
   resetOpenRouterCache();

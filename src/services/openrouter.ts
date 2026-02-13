@@ -1,3 +1,5 @@
+/** Client-side OpenRouter proxy — all calls route through the /api/chat server endpoint. */
+
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
