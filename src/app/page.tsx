@@ -48,7 +48,7 @@ export default function HomePage() {
       {/* Footer */}
       <div className="absolute bottom-8 left-0 right-0 px-8 flex justify-between">
         <span className="text-[#808080] text-[11px]">
-          Copyright &copy; 2025 Clawback Corp.
+          Copyright &copy; {new Date().getFullYear()} Clawback Corp.
         </span>
         <span className="text-[#808080] text-[11px]">
           Clawback&reg;

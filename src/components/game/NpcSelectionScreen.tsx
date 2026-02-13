@@ -1,40 +1,12 @@
 'use client';
 
 import type { NpcPersona } from '@/types';
+import { WelcomeLogo } from './WelcomeLogo';
 
 interface NpcSelectionScreenProps {
   candidates: NpcPersona[];
   isGenerated: boolean;
   onSelect: (npc: NpcPersona) => void;
-}
-
-function WelcomeLogo({ subtitle }: { subtitle: string }) {
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <span className="text-[56px] leading-none">🦞</span>
-
-      <div className="text-center">
-        <div className="flex items-baseline justify-center gap-1.5">
-          <span
-            className="text-white text-[22px] font-bold tracking-wide"
-            style={{ fontFamily: "'Franklin Gothic Medium', 'Tahoma', sans-serif" }}
-          >
-            Claw
-          </span>
-          <span
-            className="text-white text-[14px] font-light italic tracking-wider"
-            style={{ fontFamily: "'Franklin Gothic Medium', 'Tahoma', sans-serif" }}
-          >
-            OS
-          </span>
-        </div>
-      </div>
-
-      <p className="text-white/80 text-[13px] text-center leading-relaxed mt-2">
-        {subtitle}
-      </p>
-    </div>
-  );
 }
 
 export function NpcSelectionScreen({ candidates, isGenerated, onSelect }: NpcSelectionScreenProps) {

@@ -579,9 +579,16 @@ body {
   animation: slide-in-bounce 0.4s ease-out forwards;
 }
 
+/* XP brand font — used for "Claw OS" branding across boot and welcome screens */
+.font-xp-brand {
+  font-family: 'Franklin Gothic Medium', 'Tahoma', sans-serif;
+}
+
 /* === XP BOOT SCREEN === */
 
-/* Progress bar - three blue blocks sliding left to right */
+/* Progress bar - three blue blocks sliding left to right.
+   Blocks start off-screen left (-100%) and slide to 500% (5x container width)
+   so they traverse the full track before looping. */
 @keyframes xp-boot-progress {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(500%); }
@@ -671,6 +678,11 @@ body {
   background: rgba(255, 255, 255, 0.12);
 }
 
+.xp-welcome-row:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
 /* Welcome separator between left/right panels */
 .xp-welcome-separator {
   width: 2px;
@@ -687,8 +699,8 @@ body {
 /* === ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0ms !important;
   }
 }

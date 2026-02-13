@@ -5,6 +5,7 @@ import { useGameEngine } from './GameProvider';
 import { useGameStore } from '@/store/gameStore';
 import { generateNpcCandidates } from '@/services/generation';
 import { NpcSelectionScreen } from './NpcSelectionScreen';
+import { WelcomeLogo } from './WelcomeLogo';
 import type { Difficulty, NpcPersona } from '@/types';
 
 const DIFFICULTIES: { id: Difficulty; label: string; description: string; icon: string }[] = [
@@ -12,35 +13,6 @@ const DIFFICULTIES: { id: Difficulty; label: string; description: string; icon: 
   { id: 'normal', label: 'Normal', description: 'Balanced challenge', icon: '⚡' },
   { id: 'hard', label: 'Hard', description: 'Tight deadlines, more traps', icon: '🔥' },
 ];
-
-function WelcomeLogo({ subtitle }: { subtitle: string }) {
-  return (
-    <div className="flex flex-col items-center gap-4">
-      <span className="text-[56px] leading-none">🦞</span>
-
-      <div className="text-center">
-        <div className="flex items-baseline justify-center gap-1.5">
-          <span
-            className="text-white text-[22px] font-bold tracking-wide"
-            style={{ fontFamily: "'Franklin Gothic Medium', 'Tahoma', sans-serif" }}
-          >
-            Claw
-          </span>
-          <span
-            className="text-white text-[14px] font-light italic tracking-wider"
-            style={{ fontFamily: "'Franklin Gothic Medium', 'Tahoma', sans-serif" }}
-          >
-            OS
-          </span>
-        </div>
-      </div>
-
-      <p className="text-white/80 text-[13px] text-center leading-relaxed mt-2">
-        {subtitle}
-      </p>
-    </div>
-  );
-}
 
 export function StartScreen() {
   const engine = useGameEngine();
@@ -156,7 +128,7 @@ export function StartScreen() {
           You are the AI now.
         </div>
         <div className="text-white/30 text-[10px]">
-          Clawback v0.1 &mdash; Papers, Please meets Claude
+          Clawback v0.1 — Papers, Please meets Claude
         </div>
       </div>
     </div>
