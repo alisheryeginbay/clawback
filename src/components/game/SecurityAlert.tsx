@@ -30,6 +30,6 @@ export function SecurityAlert() {
   if (!isFlashing) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 security-flash bg-claw-red/30" />
+    <div className="fixed inset-0 pointer-events-none z-[9800] security-flash bg-claw-red/30" />
   );
 }

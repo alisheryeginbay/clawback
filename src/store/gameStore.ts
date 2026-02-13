@@ -5,6 +5,7 @@ import { createToolSlice, type ToolSlice } from './slices/toolSlice';
 import { createRequestSlice, type RequestSlice } from './slices/requestSlice';
 import { createResourceSlice, type ResourceSlice } from './slices/resourceSlice';
 import { createScoreSlice, type ScoreSlice } from './slices/scoreSlice';
+import { createWindowSlice, type WindowSlice } from './slices/windowSlice';
 import type { GamePhase, Difficulty, GameNotification, Email, CalendarEvent, SearchResult, NpcPersona } from '@/types';
 import { generateId } from '@/lib/utils';
 import { resetGenerationService } from '@/services/generation';
@@ -43,7 +44,7 @@ export interface GameSlice {
   resetGame: () => void;
 }
 
-type StoreState = ClockSlice & NpcSlice & ToolSlice & RequestSlice & ResourceSlice & ScoreSlice & GameSlice;
+type StoreState = ClockSlice & NpcSlice & ToolSlice & RequestSlice & ResourceSlice & ScoreSlice & WindowSlice & GameSlice;
 
 export const useGameStore = create<StoreState>()((...a) => ({
   ...createClockSlice(...a),
@@ -52,6 +53,7 @@ export const useGameStore = create<StoreState>()((...a) => ({
   ...createRequestSlice(...a),
   ...createResourceSlice(...a),
   ...createScoreSlice(...a),
+  ...createWindowSlice(...a),
 
   // Meta
   phase: 'start',
@@ -126,6 +128,7 @@ export const useGameStore = create<StoreState>()((...a) => ({
     store.resetRequests();
     store.resetResources();
     store.resetScore();
+    store.resetWindows();
     resetGenerationService();
     set({
       phase: 'start',

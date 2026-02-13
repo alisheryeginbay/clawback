@@ -5,7 +5,6 @@ import { useGameEngine } from './GameProvider';
 import { useGameStore } from '@/store/gameStore';
 import { generateNpcCandidates } from '@/services/generation';
 import { NpcSelectionScreen } from './NpcSelectionScreen';
-import { WindowControls } from '@/components/layout/WindowControls';
 import type { Difficulty, NpcPersona } from '@/types';
 import { cn } from '@/lib/utils';
 
@@ -77,7 +76,6 @@ export function StartScreen() {
   if (phase === 'generating') {
     return (
       <div className="h-screen w-screen bg-[var(--color-xp-desktop)] flex items-center justify-center xp-window-in">
-        <WindowControls className="fixed top-3 right-3 z-50" />
         <div className="xp-dialog p-8 text-center space-y-4">
           <div className="text-[#003C74] text-sm font-bold">
             Generating Colleagues...
@@ -113,7 +111,6 @@ export function StartScreen() {
   // Start phase — boot sequence + setup
   return (
     <div className="h-screen w-screen bg-[var(--color-xp-desktop)] flex items-center justify-center xp-window-in p-8">
-      <WindowControls className="fixed top-3 right-3 z-50" />
       <div className="max-w-2xl w-full">
         <div className="xp-dialog overflow-hidden">
           {/* XP Title Bar */}

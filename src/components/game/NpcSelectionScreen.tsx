@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import type { NpcPersona } from '@/types';
 import { cn } from '@/lib/utils';
-import { WindowControls } from '@/components/layout/WindowControls';
-
 interface NpcSelectionScreenProps {
   candidates: NpcPersona[];
   isGenerated: boolean;
@@ -32,7 +30,6 @@ export function NpcSelectionScreen({ candidates, isGenerated, onSelect }: NpcSel
 
   return (
     <div className="h-screen w-screen bg-[var(--color-xp-desktop)] flex items-center justify-center xp-window-in">
-      <WindowControls className="fixed top-3 right-3 z-50" />
       <div className="max-w-4xl w-full mx-4">
         <div className="xp-dialog overflow-hidden">
           {/* XP Title Bar */}

@@ -3,7 +3,7 @@
 import { useGameStore } from '@/store/gameStore';
 import { GameProvider } from '@/components/game/GameProvider';
 import { StartScreen } from '@/components/game/StartScreen';
-import { Workspace } from '@/components/layout/Workspace';
+import { Desktop } from '@/components/layout/Desktop';
 import { ScorePopup } from '@/components/game/ScorePopup';
 import { SecurityAlert } from '@/components/game/SecurityAlert';
 import { GameOverScreen } from '@/components/game/GameOverScreen';
@@ -17,7 +17,7 @@ function GameContent() {
 
   return (
     <>
-      <Workspace />
+      <Desktop />
       <ScorePopup />
       <SecurityAlert />
       <GameOverScreen />

@@ -34,7 +34,7 @@ export function ScorePopup() {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-40">
+    <div className="fixed inset-0 pointer-events-none z-[9800]">
       {popups.map((popup) => (
         <div
           key={popup.id}
