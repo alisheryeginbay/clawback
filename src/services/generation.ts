@@ -1,4 +1,4 @@
-import type { NpcPersona, Difficulty, RequestTier, GameRequest } from '@/types';
+import type { NpcPersona, Difficulty, RequestTier, GameRequest, RequestObjective } from '@/types';
 import { pickFallbackNpcs } from '@/data/fallback-npcs';
 import { SCENARIOS, createRequestFromScenario } from '@/systems/requests/scenarios';
 import { generateId } from '@/lib/utils';
@@ -205,7 +205,7 @@ Respond with JSON: { "title": string, "description": string, "tier": ${tier}, "o
           completed: false,
         };
       })
-      .filter(Boolean);
+      .filter((obj: RequestObjective | null): obj is RequestObjective => obj !== null);
 
     if (validObjectives.length === 0) {
       return { request: pickFallbackRequest(params), isGenerated: false };
@@ -218,13 +218,7 @@ Respond with JSON: { "title": string, "description": string, "tier": ${tier}, "o
       description: typeof parsed.description === 'string' ? parsed.description : '',
       tier,
       status: 'incoming',
-      objectives: validObjectives.map((obj: { id: string; description: string; validator: string; params: Record<string, unknown>; completed: boolean }) => ({
-        id: obj.id || generateId(),
-        description: obj.description || '',
-        validator: obj.validator || '',
-        params: obj.params || {},
-        completed: false,
-      })),
+      objectives: validObjectives,
       arrivalTick: Date.now(),
       deadlineTicks: clampRange(parsed.deadlineTicks, 30, 200),
       basePoints: clampRange(parsed.basePoints, 30, 300),
