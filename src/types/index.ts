@@ -234,6 +234,31 @@ export interface ConsequenceEffect {
   sound?: string;
 }
 
+// --- Window Manager ---
+
+export type WindowId = string;
+
+export interface WindowState {
+  id: WindowId;
+  toolId: ToolId;
+  title: string;
+  icon: string;
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+  minSize: { width: number; height: number };
+  isMinimized: boolean;
+  isMaximized: boolean;
+  zIndex: number;
+  preMaximize?: { position: { x: number; y: number }; size: { width: number; height: number } };
+}
+
+export interface DesktopIcon {
+  id: string;
+  toolId: ToolId;
+  label: string;
+  icon: string;
+}
+
 // --- Store ---
 
 export interface GameState {

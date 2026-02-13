@@ -53,7 +53,7 @@ export function NotificationTray() {
   if (visible.length === 0) return null;
 
   return (
-    <div className="fixed bottom-14 right-4 z-50 flex flex-col gap-2 w-80">
+    <div className="fixed bottom-12 right-4 z-[9600] flex flex-col gap-2 w-80">
       {visible.map((notification) => {
         const Icon = ICON_MAP[notification.type];
         const isExiting = exitingIds.has(notification.id);

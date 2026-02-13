@@ -310,6 +310,52 @@ body {
   background: linear-gradient(180deg, #B02020 0%, #D84040 100%);
 }
 
+/* XP Title Bar — inactive/unfocused window */
+.xp-titlebar-inactive {
+  background: linear-gradient(180deg, #7A96DF 0%, #A4B8E4 4%, #7A96DF 48%, #A4B8E4 50%, #7A96DF 96%, #6B8AD5 100%);
+  padding: 4px 6px;
+  color: #D8D8D8;
+  font-family: var(--font-xp);
+  font-weight: bold;
+  font-size: 13px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  min-height: 26px;
+}
+
+/* XP Taskbar Window Buttons */
+.xp-taskbar-button {
+  background: linear-gradient(180deg, #3C8AD0 0%, #2B72B8 50%, #245EDC 100%);
+  border: 1px solid #0D4A8A;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.xp-taskbar-button:hover {
+  background: linear-gradient(180deg, #5CA0E0 0%, #3C8AD0 50%, #2B72B8 100%);
+}
+
+.xp-taskbar-button-active {
+  background: linear-gradient(180deg, #1C4A80 0%, #2B5A98 50%, #1C4A80 100%);
+  border: 1px solid #0D4A8A;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* XP Desktop Icons */
+.xp-desktop-icon:hover {
+  background: rgba(49, 106, 197, 0.3);
+}
+
+.xp-desktop-icon:focus {
+  background: rgba(49, 106, 197, 0.4);
+  outline: 1px dotted rgba(255, 255, 255, 0.5);
+}
+
 /* === ANIMATIONS === */
 
 /* Terminal cursor blink */
