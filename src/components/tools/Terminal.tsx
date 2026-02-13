@@ -45,7 +45,6 @@ export function Terminal() {
       setTerminalCwd(result.newCwd);
     }
 
-    // Apply side effects
     if (result.sideEffects) {
       if (result.sideEffects.cpuCost) adjustResource('cpu', result.sideEffects.cpuCost);
       if (result.sideEffects.memoryCost) adjustResource('memory', result.sideEffects.memoryCost);
@@ -79,7 +78,6 @@ export function Terminal() {
       }
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      // Basic tab completion - could be expanded
     }
   };
 
@@ -87,16 +85,15 @@ export function Terminal() {
 
   return (
     <div
-      className="h-full flex flex-col bg-claw-bg font-mono text-sm"
+      className="h-full flex flex-col bg-[#000000] font-mono text-sm"
       onClick={() => inputRef.current?.focus()}
     >
       {/* Terminal output */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-1">
-        {/* Welcome message */}
         {history.length === 0 && (
-          <div className="text-claw-muted">
-            <div className="text-claw-green">Welcome to ClawOS Terminal v1.0</div>
-            <div>Type <span className="text-claw-blue">help</span> for available commands.</div>
+          <div className="text-[#808080]">
+            <div className="text-[#00FF00]">Microsoft(R) ClawOS Command Prompt</div>
+            <div className="text-[#C0C0C0]">(C) Clawback Corp. Type <span className="text-[#00CCFF]">help</span> for commands.</div>
             <div className="mt-1" />
           </div>
         )}
@@ -105,19 +102,14 @@ export function Terminal() {
           const isLatest = idx === history.length - 1;
           return (
             <div key={entry.id}>
-              {/* Prompt + command */}
               <div className="flex gap-1">
-                <span className="text-claw-green">clawback</span>
-                <span className="text-claw-muted">:</span>
-                <span className="text-claw-blue">{entry.cwd.replace(/^\/home\/user/, '~')}</span>
-                <span className="text-claw-muted">$</span>
-                <span className="text-claw-text ml-1">{entry.command}</span>
+                <span className="text-[#C0C0C0]">C:\{entry.cwd.replace(/^\/home\/user/, '').replace(/\//g, '\\')}&gt;</span>
+                <span className="text-[#C0C0C0] ml-1">{entry.command}</span>
               </div>
-              {/* Output */}
               {entry.output && (
                 <pre
                   className={`whitespace-pre-wrap break-words text-xs leading-relaxed mt-0.5 ${
-                    entry.isError ? 'text-claw-red' : 'text-claw-text/80'
+                    entry.isError ? 'text-claw-red' : 'text-[#C0C0C0]/80'
                   } ${isLatest ? 'terminal-reveal' : ''}`}
                   dangerouslySetInnerHTML={{
                     __html: ansiToHtml(entry.output),
@@ -130,40 +122,36 @@ export function Terminal() {
       </div>
 
       {/* Input line */}
-      <form onSubmit={handleSubmit} className="flex-shrink-0 border-t border-claw-border p-3">
+      <form onSubmit={handleSubmit} className="flex-shrink-0 border-t border-[#333333] p-3">
         <div className="flex items-center gap-1">
-          <span className="text-claw-green text-xs">clawback</span>
-          <span className="text-claw-muted text-xs">:</span>
-          <span className="text-claw-blue text-xs">{shortCwd}</span>
-          <span className="text-claw-muted text-xs">$</span>
+          <span className="text-[#C0C0C0] text-xs">C:\{shortCwd.replace(/^~/, '').replace(/\//g, '\\')}&gt;</span>
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent text-claw-green text-sm font-mono border-none outline-none caret-claw-green ml-1"
+            className="flex-1 bg-transparent text-[#C0C0C0] text-sm font-mono border-none outline-none caret-[#C0C0C0] ml-1"
             autoFocus
             spellCheck={false}
             autoComplete="off"
           />
-          <span className="w-2 h-4 bg-claw-green cursor-blink" />
+          <span className="w-2 h-4 bg-[#C0C0C0] cursor-blink" />
         </div>
       </form>
     </div>
   );
 }
 
-// Simple ANSI color code to HTML converter
 function ansiToHtml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/\x1b\[31m/g, '<span class="text-claw-red">')
-    .replace(/\x1b\[32m/g, '<span class="text-claw-green">')
+    .replace(/\x1b\[32m/g, '<span class="text-[#00FF00]">')
     .replace(/\x1b\[33m/g, '<span class="text-claw-orange">')
-    .replace(/\x1b\[34m/g, '<span class="text-claw-blue">')
-    .replace(/\x1b\[35m/g, '<span class="text-claw-purple">')
+    .replace(/\x1b\[34m/g, '<span class="text-[#00CCFF]">')
+    .replace(/\x1b\[35m/g, '<span class="text-[#7B68EE]">')
     .replace(/\x1b\[0m/g, '</span>');
 }

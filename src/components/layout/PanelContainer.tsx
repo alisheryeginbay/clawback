@@ -34,10 +34,8 @@ export function PanelContainer() {
   const setActiveTool = useGameStore((s) => s.setActiveTool);
   const ActiveComponent = TOOL_COMPONENTS[activeTool];
 
-  // Keyboard shortcuts for tool switching
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't capture if typing in an input
       const target = e.target as HTMLElement;
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT') return;
 
@@ -60,15 +58,14 @@ export function PanelContainer() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [setActiveTool]);
 
-  // When chat is the active tool, show it full-width
   if (activeTool === 'chat') {
     return (
-      <div className="h-full flex flex-col bg-claw-bg">
-        <div className="h-8 bg-claw-surface border-b border-claw-border flex items-center px-3">
-          <span className="text-xs text-claw-muted uppercase tracking-wider">
+      <div className="h-full flex flex-col bg-white">
+        <div className="h-8 bg-[var(--color-xp-face)] border-b border-[#ACA899] flex items-center px-3">
+          <span className="text-xs text-[#000000] font-bold">
             {TOOL_LABELS[activeTool]}
           </span>
-          <span className="text-[10px] text-claw-dim ml-auto">Alt+1-6 to switch tools</span>
+          <span className="text-[10px] text-[#808080] ml-auto">Alt+1-6 to switch tools</span>
         </div>
         <div className="flex-1 overflow-hidden">
           <ChatPanel />
@@ -80,12 +77,12 @@ export function PanelContainer() {
   return (
     <ResizablePanel
       left={
-        <div className="h-full flex flex-col bg-claw-bg">
-          <div className="h-8 bg-claw-surface border-b border-claw-border flex items-center px-3">
-            <span className="text-xs text-claw-muted uppercase tracking-wider">
+        <div className="h-full flex flex-col bg-[var(--color-xp-face)]">
+          <div className="h-8 bg-[var(--color-xp-face)] border-b border-[#ACA899] flex items-center px-3">
+            <span className="text-xs text-[#000000] font-bold">
               {TOOL_LABELS[activeTool]}
             </span>
-            <span className="text-[10px] text-claw-dim ml-auto">Alt+1-6 to switch tools</span>
+            <span className="text-[10px] text-[#808080] ml-auto">Alt+1-6 to switch tools</span>
           </div>
           <div className="flex-1 overflow-hidden">
             <ActiveComponent />
@@ -93,7 +90,7 @@ export function PanelContainer() {
         </div>
       }
       right={
-        <div className="h-full flex flex-col bg-claw-bg">
+        <div className="h-full flex flex-col bg-white">
           <ChatPanel />
         </div>
       }

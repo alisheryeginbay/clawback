@@ -1,66 +1,316 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-claw-bg: #0a0e14;
-  --color-claw-surface: #131820;
-  --color-claw-surface-alt: #1a2030;
-  --color-claw-border: #1e2530;
-  --color-claw-border-bright: #2a3545;
-  --color-claw-green: #00ff9f;
-  --color-claw-green-dim: #00cc7f;
-  --color-claw-blue: #00b4d8;
-  --color-claw-orange: #ff9f1c;
-  --color-claw-red: #ff4444;
-  --color-claw-purple: #b388ff;
-  --color-claw-yellow: #ffd60a;
-  --color-claw-text: #e0e0e0;
-  --color-claw-muted: #6b7280;
-  --color-claw-dim: #3a4555;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  /* === Windows XP Luna Blue === */
+
+  /* Game content (dark panels inside XP chrome) */
+  --color-claw-bg: #0a0f1a;
+  --color-claw-surface: #111827;
+  --color-claw-surface-alt: #1e293b;
+  --color-claw-border: #003C74;
+  --color-claw-border-bright: #0054E3;
+
+  /* XP Chrome Colors */
+  --color-claw-coral: #0054E3;
+  --color-claw-coral-mid: #003C74;
+  --color-claw-coral-dark: #002B5C;
+  --color-claw-green: #399639;
+  --color-claw-green-dim: #277427;
+
+  /* Accent colors */
+  --color-claw-cyan: #0066CC;
+  --color-claw-cyan-mid: #0054E3;
+  --color-claw-blue: #0054E3;
+  --color-claw-orange: #FF8C00;
+  --color-claw-red: #E04040;
+  --color-claw-purple: #7B68EE;
+  --color-claw-yellow: #FFD700;
+
+  /* Text */
+  --color-claw-text: #000000;
+  --color-claw-muted: #808080;
+  --color-claw-dim: #A0A0A0;
+
+  /* XP-specific */
+  --color-xp-face: #ECE9D8;
+  --color-xp-window: #FFFFFF;
+  --color-xp-title-start: #0054E3;
+  --color-xp-title-end: #3593FF;
+  --color-xp-taskbar-start: #1C5FA0;
+  --color-xp-taskbar-end: #3C8AD0;
+  --color-xp-selection: #316AC5;
+  --color-xp-desktop: #3B6EA5;
+
+  /* Fonts */
+  --font-mono: 'Lucida Console', 'Consolas', ui-monospace, monospace;
+  --font-xp: 'Tahoma', 'Segoe UI', 'Arial', sans-serif;
 }
 
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 100 800;
-  font-display: swap;
-  src: url('https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxjPVmUsaaDhw.woff2') format('woff2');
-}
-
+/* === SCROLLBARS (XP classic) === */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-claw-border-bright) transparent;
+  scrollbar-width: auto;
+  scrollbar-color: #C0C0C0 #ECE9D8;
 }
 
 *::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 16px;
+  height: 16px;
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent;
+  background: #ECE9D8;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: var(--color-claw-border-bright);
-  border-radius: 3px;
+  background: #C0C0C0;
+  border: 1px solid #808080;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: var(--color-claw-dim);
+  background: #A0A0A0;
+}
+
+*::-webkit-scrollbar-button {
+  background: #ECE9D8;
+  border: 1px solid #808080;
+  height: 16px;
+  width: 16px;
 }
 
 body {
-  background: var(--color-claw-bg);
+  background: var(--color-xp-desktop);
   color: var(--color-claw-text);
-  font-family: var(--font-mono);
+  font-family: var(--font-xp);
+  font-size: 11px;
   overflow: hidden;
 }
 
 ::selection {
-  background: rgba(0, 255, 159, 0.2);
-  color: var(--color-claw-green);
+  background: #316AC5;
+  color: #FFFFFF;
 }
+
+/* === XP UTILITY CLASSES === */
+
+/* XP Title Bar — classic blue gradient */
+.xp-titlebar {
+  background: linear-gradient(180deg, #0058EE 0%, #3593FF 4%, #2B71D0 48%, #3B9AFF 50%, #1D5DB3 96%, #0053E8 100%);
+  padding: 4px 6px;
+  color: #FFFFFF;
+  font-family: var(--font-xp);
+  font-weight: bold;
+  font-size: 13px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  min-height: 26px;
+}
+
+/* XP Window — classic window frame */
+.xp-window {
+  background: var(--color-xp-face);
+  border: 1px solid #0054E3;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+/* XP Button — classic 3D beveled */
+.xp-button {
+  font-family: var(--font-xp);
+  font-size: 11px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #ECE9D8 45%, #D6D2C2 100%);
+  border: 1px solid #003C74;
+  border-radius: 3px;
+  padding: 3px 12px;
+  color: #000000;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #FFFFFF;
+  transition: all 0.1s;
+}
+
+.xp-button:hover {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0EDE1 45%, #DDD9C9 100%);
+  border-color: #0054E3;
+}
+
+.xp-button:active {
+  background: linear-gradient(180deg, #D6D2C2 0%, #ECE9D8 100%);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.xp-button:focus-visible {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+/* XP Input — classic inset border */
+.xp-input {
+  font-family: var(--font-xp);
+  font-size: 11px;
+  background: #FFFFFF;
+  border: 1px solid #7F9DB9;
+  border-top-color: #808080;
+  border-left-color: #808080;
+  padding: 3px 4px;
+  color: #000000;
+  box-shadow: inset 1px 1px 0 #C0C0C0;
+}
+
+.xp-input:focus {
+  border-color: #0054E3;
+  outline: none;
+}
+
+/* XP Dialog — classic dialog window */
+.xp-dialog {
+  background: var(--color-xp-face);
+  border: 1px solid #0054E3;
+  border-radius: 8px 8px 4px 4px;
+  box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+/* XP Balloon — notification tooltip */
+.xp-balloon {
+  background: #FFFFE1;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 10px 14px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  color: #000000;
+  font-family: var(--font-xp);
+  font-size: 11px;
+  position: relative;
+}
+
+.xp-balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #FFFFE1;
+}
+
+.xp-balloon::before {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 19px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #000000;
+}
+
+/* XP Taskbar — blue gradient */
+.xp-taskbar {
+  background: linear-gradient(180deg, #1C5FA0 0%, #2B72B8 15%, #3C8AD0 50%, #2B72B8 85%, #245EDC 100%);
+  border-top: 1px solid #0D4A8A;
+}
+
+/* XP Start Button — green */
+.xp-start-button {
+  background: linear-gradient(180deg, #3C943C 0%, #399639 30%, #277427 70%, #1E5C1E 100%);
+  border: 1px solid #1E3C1E;
+  border-radius: 0 8px 8px 0;
+  padding: 2px 10px 2px 6px;
+  color: #FFFFFF;
+  font-family: var(--font-xp);
+  font-weight: bold;
+  font-size: 13px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.xp-start-button:hover {
+  background: linear-gradient(180deg, #4AA64A 0%, #43A643 30%, #2F8C2F 70%, #267626 100%);
+}
+
+.xp-start-button:active {
+  background: linear-gradient(180deg, #277427 0%, #399639 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* XP Primary Button — blue themed action button */
+.xp-primary-button {
+  font-family: var(--font-xp);
+  font-size: 11px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #ECE9D8 45%, #D6D2C2 100%);
+  border: 2px solid #003C74;
+  border-radius: 3px;
+  padding: 4px 20px;
+  color: #000000;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 #FFFFFF;
+  transition: all 0.1s;
+}
+
+.xp-primary-button:hover {
+  border-color: #0054E3;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0EDE1 45%, #DDD9C9 100%);
+}
+
+.xp-primary-button:active {
+  background: linear-gradient(180deg, #D6D2C2 0%, #ECE9D8 100%);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.xp-primary-button:focus-visible {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+/* XP Window Control Buttons */
+.xp-control-btn {
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.1s;
+  background: linear-gradient(180deg, #3C8AFF 0%, #2468CC 50%, #1C5FA0 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.xp-control-btn:hover {
+  background: linear-gradient(180deg, #5CA0FF 0%, #3C8AFF 50%, #2B72B8 100%);
+}
+
+.xp-control-btn:active {
+  background: linear-gradient(180deg, #1C5FA0 0%, #2468CC 100%);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.xp-control-btn-close {
+  background: linear-gradient(180deg, #E88C6C 0%, #D84040 50%, #B02020 100%);
+}
+
+.xp-control-btn-close:hover {
+  background: linear-gradient(180deg, #FFA080 0%, #E85050 50%, #C83030 100%);
+}
+
+.xp-control-btn-close:active {
+  background: linear-gradient(180deg, #B02020 0%, #D84040 100%);
+}
+
+/* === ANIMATIONS === */
 
 /* Terminal cursor blink */
 @keyframes cursor-blink {
@@ -79,11 +329,11 @@ body {
 }
 
 .glow-green {
-  text-shadow: 0 0 10px rgba(0, 255, 159, 0.5);
+  text-shadow: 0 0 10px rgba(57, 150, 57, 0.5);
 }
 
 .glow-red {
-  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+  text-shadow: 0 0 10px rgba(224, 64, 64, 0.5);
 }
 
 /* Score popup float animation */
@@ -151,40 +401,26 @@ body {
   animation: typewriter 0.5s steps(30) forwards;
 }
 
-/* ===== CRT SCANLINE OVERLAY ===== */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.08) 2px,
-      rgba(0, 0, 0, 0.08) 4px
-    );
-  mix-blend-mode: multiply;
+/* XP window entrance */
+@keyframes xp-window-in {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* CRT vignette effect */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+.xp-window-in {
+  animation: xp-window-in 0.2s ease-out forwards;
 }
 
-/* Green text glow for terminal aesthetic */
-.crt-glow {
-  text-shadow: 0 0 6px rgba(0, 255, 159, 0.3), 0 0 12px rgba(0, 255, 159, 0.1);
+/* Keep aliases */
+.hud-panel-in {
+  animation: xp-window-in 0.2s ease-out forwards;
 }
 
-/* ===== SCREEN SHAKE ===== */
+.crt-on {
+  animation: xp-window-in 0.2s ease-out forwards;
+}
+
+/* Screen shake */
 @keyframes screen-shake {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   10% { transform: translate(-2px, -1px) rotate(-0.3deg); }
@@ -201,7 +437,7 @@ body::before {
   animation: screen-shake 0.5s ease-out;
 }
 
-/* ===== TERMINAL TYPING EFFECT ===== */
+/* Terminal reveal */
 @keyframes terminal-reveal {
   from { max-height: 0; opacity: 0; }
   to { max-height: 500px; opacity: 1; }
@@ -212,7 +448,7 @@ body::before {
   overflow: hidden;
 }
 
-/* ===== RESOURCE METER GLOW ===== */
+/* Resource meter glow */
 @keyframes meter-pulse {
   0%, 100% { box-shadow: none; }
   50% { box-shadow: 0 0 8px currentColor; }
@@ -220,7 +456,7 @@ body::before {
 
 @keyframes meter-pulse-critical {
   0%, 100% { box-shadow: none; opacity: 1; }
-  50% { box-shadow: 0 0 12px rgba(255, 68, 68, 0.6); opacity: 0.8; }
+  50% { box-shadow: 0 0 12px rgba(224, 64, 64, 0.6); opacity: 0.8; }
 }
 
 .meter-warning {
@@ -231,10 +467,7 @@ body::before {
   animation: meter-pulse-critical 1s ease-in-out infinite;
 }
 
-/* ===== NOTIFICATION EXIT ===== */
-/* slide-out-right already exists above */
-
-/* ===== NPC TYPING INDICATOR ===== */
+/* NPC typing indicator */
 @keyframes typing-bounce {
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(-4px); }
@@ -244,7 +477,7 @@ body::before {
 .typing-bounce-2 { animation: typing-bounce 1.2s ease-in-out infinite 0.15s; }
 .typing-bounce-3 { animation: typing-bounce 1.2s ease-in-out infinite 0.3s; }
 
-/* ===== SCORE SPARKLE PARTICLES ===== */
+/* Score sparkle particles */
 @keyframes sparkle-scatter-1 {
   0% { transform: translate(0, 0) scale(1); opacity: 1; }
   100% { transform: translate(-20px, -30px) scale(0); opacity: 0; }
@@ -277,7 +510,7 @@ body::before {
 .sparkle:nth-child(5) { animation: sparkle-scatter-5 0.8s ease-out forwards; }
 .sparkle:nth-child(6) { animation: sparkle-scatter-6 0.8s ease-out forwards; }
 
-/* ===== BADGE PULSE ===== */
+/* Badge pop */
 @keyframes badge-pop {
   0% { transform: scale(1); }
   40% { transform: scale(1.35); }
@@ -288,7 +521,7 @@ body::before {
   animation: badge-pop 0.3s ease-out;
 }
 
-/* ===== REQUEST CARD ENTRANCE ===== */
+/* Request card entrance */
 @keyframes slide-in-bounce {
   0% { transform: translateX(100%); opacity: 0; }
   60% { transform: translateX(-4px); opacity: 1; }
@@ -300,27 +533,11 @@ body::before {
   animation: slide-in-bounce 0.4s ease-out forwards;
 }
 
-/* ===== CRT POWER-ON ===== */
-@keyframes crt-on {
-  0% { transform: scaleY(0.005) scaleX(0.2); filter: brightness(10); opacity: 0.5; }
-  20% { transform: scaleY(0.005) scaleX(1); filter: brightness(5); opacity: 0.8; }
-  40% { transform: scaleY(1) scaleX(1); filter: brightness(2); opacity: 1; }
-  60% { transform: scaleY(1) scaleX(1); filter: brightness(1.2); }
-  100% { transform: scaleY(1) scaleX(1); filter: brightness(1); }
-}
-
-.crt-on {
-  animation: crt-on 0.8s cubic-bezier(0.2, 0, 0.2, 1) forwards;
-}
-
-/* ===== ACCESSIBILITY ===== */
+/* === ACCESSIBILITY === */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-  body::after, body::before {
-    display: none !important;
   }
 }

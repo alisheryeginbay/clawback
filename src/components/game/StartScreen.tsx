@@ -5,30 +5,31 @@ import { useGameEngine } from './GameProvider';
 import { useGameStore } from '@/store/gameStore';
 import { generateNpcCandidates } from '@/services/generation';
 import { NpcSelectionScreen } from './NpcSelectionScreen';
+import { WindowControls } from '@/components/layout/WindowControls';
 import type { Difficulty, NpcPersona } from '@/types';
 import { cn } from '@/lib/utils';
 
 const BOOT_LINES = [
   'BIOS POST... OK',
   'Memory Test... 512MB OK',
-  'Loading ClawOS v6.1.0...',
+  'Loading ClawOS...',
   'Initializing kernel modules...',
   'Starting network services... OK',
   'Mounting virtual filesystem... OK',
   'Loading AI core... OK',
   '',
-  '▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄',
-  '█  CLAWBACK v0.1                      █',
-  '█  "You are the AI now"               █',
-  '▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀',
+  '╔════════════════════════════════════════╗',
+  '║  CLAWBACK v0.1                        ║',
+  '║  "You are the AI now"                 ║',
+  '╚════════════════════════════════════════╝',
   '',
-  'System ready. Awaiting operator input...',
+  'System ready. Starting initialization...',
 ];
 
 const DIFFICULTIES: { id: Difficulty; label: string; description: string }[] = [
-  { id: 'easy', label: 'EASY', description: 'Slow pace, fewer requests, generous deadlines' },
-  { id: 'normal', label: 'NORMAL', description: 'Balanced challenge, moderate deadlines' },
-  { id: 'hard', label: 'HARD', description: 'Fast pace, tight deadlines, more traps' },
+  { id: 'easy', label: 'Easy', description: 'Slow pace, fewer requests, generous deadlines' },
+  { id: 'normal', label: 'Normal', description: 'Balanced challenge, moderate deadlines' },
+  { id: 'hard', label: 'Hard', description: 'Fast pace, tight deadlines, more traps' },
 ];
 
 export function StartScreen() {
@@ -72,24 +73,25 @@ export function StartScreen() {
     engine.start({ difficulty: selectedDifficulty, selectedNpc: npc });
   }, [engine, selectedDifficulty]);
 
-  // Generating phase — loading spinner
+  // Generating phase
   if (phase === 'generating') {
     return (
-      <div className="h-screen w-screen bg-claw-bg flex items-center justify-center crt-on">
-        <div className="text-center">
-          <div className="text-claw-green text-sm font-bold uppercase tracking-widest mb-4">
+      <div className="h-screen w-screen bg-[var(--color-xp-desktop)] flex items-center justify-center xp-window-in">
+        <WindowControls className="fixed top-3 right-3 z-50" />
+        <div className="xp-dialog p-8 text-center space-y-4">
+          <div className="text-[#003C74] text-sm font-bold">
             Generating Colleagues...
           </div>
-          <div className="flex justify-center gap-1.5 mb-4">
+          <div className="flex justify-center gap-2 mb-4">
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                className="w-2 h-2 rounded-full bg-claw-green animate-pulse"
+                className="w-3 h-3 rounded-full bg-[#0054E3] animate-pulse"
                 style={{ animationDelay: `${i * 200}ms` }}
               />
             ))}
           </div>
-          <p className="text-claw-muted text-[10px]">
+          <p className="text-[#808080] text-xs">
             Contacting HR department...
           </p>
         </div>
@@ -97,7 +99,7 @@ export function StartScreen() {
     );
   }
 
-  // Selecting phase — NPC selection screen
+  // Selecting phase
   if (phase === 'selecting') {
     return (
       <NpcSelectionScreen
@@ -108,78 +110,94 @@ export function StartScreen() {
     );
   }
 
-  // Start phase — boot sequence + difficulty selection
+  // Start phase — boot sequence + setup
   return (
-    <div className="h-screen w-screen bg-claw-bg flex items-center justify-center crt-on">
-      <div className="max-w-2xl w-full mx-4">
-        {/* Boot sequence */}
-        <div className="bg-claw-surface border border-claw-border p-6 font-mono text-sm mb-4 max-h-[400px] overflow-y-auto">
-          {bootLines.map((line, i) => (
-            <div
-              key={i}
-              className={cn(
-                'leading-relaxed',
-                (line ?? '').startsWith('█') || (line ?? '').startsWith('▄') || (line ?? '').startsWith('▀')
-                  ? 'text-claw-green glow-green'
-                  : (line ?? '').includes('OK')
-                    ? 'text-claw-green'
-                    : (line ?? '').includes('...')
-                      ? 'text-claw-muted'
-                      : 'text-claw-text'
-              )}
-            >
-              {line || '\u00A0'}
+    <div className="h-screen w-screen bg-[var(--color-xp-desktop)] flex items-center justify-center xp-window-in p-8">
+      <WindowControls className="fixed top-3 right-3 z-50" />
+      <div className="max-w-2xl w-full">
+        <div className="xp-dialog overflow-hidden">
+          {/* XP Title Bar */}
+          <div className="xp-titlebar">
+            <span>Clawback - Initialization</span>
+          </div>
+
+          {/* Boot sequence (dark terminal) */}
+          <div className="bg-[#000000] p-6 font-mono text-sm max-h-[350px] overflow-y-auto">
+            {bootLines.map((line, i) => (
+              <div
+                key={i}
+                className={cn(
+                  'leading-relaxed',
+                  (line ?? '').startsWith('╔') || (line ?? '').startsWith('╚') || (line ?? '').startsWith('║')
+                    ? 'text-[#00FF00]'
+                    : (line ?? '').includes('OK')
+                      ? 'text-[#00CCFF]'
+                      : (line ?? '').includes('...')
+                        ? 'text-[#808080]'
+                        : 'text-[#C0C0C0]'
+                )}
+              >
+                {line || '\u00A0'}
+              </div>
+            ))}
+            {!bootComplete && (
+              <span className="inline-block w-2 h-4 bg-[#00FF00] cursor-blink" />
+            )}
+          </div>
+
+          {/* Difficulty selection */}
+          {bootComplete && (
+            <div className="p-6 space-y-5 bg-[var(--color-xp-face)] animate-[fadeIn_0.3s_ease-out]">
+              <div className="border-b border-[#ACA899] pb-3">
+                <h2 className="text-sm font-bold text-[#000000]">
+                  Select Difficulty
+                </h2>
+                <p className="text-xs text-[#808080] mt-1">
+                  You are an AI assistant. Your users depend on you. Don&apos;t let them down.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                {DIFFICULTIES.map((diff) => (
+                  <button
+                    key={diff.id}
+                    onClick={() => setSelectedDifficulty(diff.id)}
+                    className={cn(
+                      'w-full p-3 text-left xp-button transition-all flex items-center gap-3',
+                      selectedDifficulty === diff.id
+                        ? '!border-[#0054E3] !bg-[#316AC5]/10'
+                        : ''
+                    )}
+                  >
+                    <div className={cn(
+                      'w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center',
+                      selectedDifficulty === diff.id
+                        ? 'border-[#0054E3]'
+                        : 'border-[#808080]'
+                    )}>
+                      {selectedDifficulty === diff.id && (
+                        <div className="w-2 h-2 rounded-full bg-[#0054E3]" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-bold text-xs text-[#000000]">{diff.label}</div>
+                      <div className="text-[11px] text-[#808080] mt-0.5">{diff.description}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-[#ACA899]">
+                <button
+                  onClick={handleStartGeneration}
+                  className="xp-primary-button px-8 py-2"
+                >
+                  Initialize &gt;
+                </button>
+              </div>
             </div>
-          ))}
-          {!bootComplete && (
-            <span className="inline-block w-2 h-4 bg-claw-green cursor-blink" />
           )}
         </div>
-
-        {/* Difficulty selection */}
-        {bootComplete && (
-          <div className="space-y-4 animate-[fadeIn_0.3s_ease-out]">
-            <div className="text-center">
-              <p className="text-claw-muted text-xs mb-1">
-                You are an AI assistant. Your users depend on you.
-              </p>
-              <p className="text-claw-green text-xs font-bold">
-                Don&apos;t let them down.
-              </p>
-            </div>
-
-            <div className="text-center text-claw-muted text-[10px] uppercase tracking-widest mb-2">
-              Select Difficulty
-            </div>
-
-            <div className="flex gap-3 justify-center">
-              {DIFFICULTIES.map((diff) => (
-                <button
-                  key={diff.id}
-                  onClick={() => setSelectedDifficulty(diff.id)}
-                  className={cn(
-                    'flex-1 max-w-[180px] p-3 border transition-all',
-                    selectedDifficulty === diff.id
-                      ? 'border-claw-green bg-claw-green/10 text-claw-green'
-                      : 'border-claw-border bg-claw-surface text-claw-muted hover:border-claw-green/30 hover:text-claw-text'
-                  )}
-                >
-                  <div className="text-sm font-bold">{diff.label}</div>
-                  <div className="text-[10px] mt-1 opacity-70">{diff.description}</div>
-                </button>
-              ))}
-            </div>
-
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={handleStartGeneration}
-                className="px-8 py-3 bg-claw-green/10 border-2 border-claw-green text-claw-green font-bold text-sm hover:bg-claw-green/20 transition-all glow-green"
-              >
-                [ START SYSTEM ]
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
