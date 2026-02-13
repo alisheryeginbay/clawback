@@ -1,3 +1,4 @@
+// One-time icon optimization utility. Requires: npm install sharp
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');

@@ -43,7 +43,7 @@ export function FileBrowser() {
                       : 'text-claw-muted hover:text-claw-text'
                   )}
                 >
-                  <FileIcon name={name} size={12} />
+                  <FileIcon name={name} />
                   <span className="truncate max-w-[120px]">{name}</span>
                   <button
                     onClick={(e) => { e.stopPropagation(); closeFile(path); }}
@@ -86,7 +86,7 @@ function FileTree({ path, depth, onSelect }: { path: string; depth: number; onSe
         className="flex items-center gap-1 px-2 py-0.5 text-xs text-claw-text hover:bg-claw-surface-alt w-full text-left"
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
       >
-        <FileIcon name={node.name} size={12} />
+        <FileIcon name={node.name} />
         <span className="truncate">{node.name}</span>
       </button>
     );
@@ -144,7 +144,7 @@ function FileContent({ path }: { path: string }) {
   );
 }
 
-function FileIcon({ name }: { name: string; size?: number }) {
+function FileIcon({ name }: { name: string }) {
   const ext = name.split('.').pop()?.toLowerCase() || '';
   const iconMap: Record<string, string> = {
     js: 'java-script',
