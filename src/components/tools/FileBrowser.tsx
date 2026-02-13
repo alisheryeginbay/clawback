@@ -4,7 +4,8 @@ import { useState, useCallback } from 'react';
 import { useGameStore } from '@/store/gameStore';
 import { VirtualFS } from '@/systems/tools/VirtualFS';
 import { cn } from '@/lib/utils';
-import { ChevronRight, ChevronDown, File, Folder, FolderOpen, X } from 'lucide-react';
+import { ChevronRight, ChevronDown, X } from 'lucide-react';
+import { XPIcon } from '@/components/ui/XPIcon';
 import type { VFSNode } from '@/types';
 
 export function FileBrowser() {
@@ -42,7 +43,7 @@ export function FileBrowser() {
                       : 'text-claw-muted hover:text-claw-text'
                   )}
                 >
-                  <FileIcon name={name} size={12} />
+                  <FileIcon name={name} />
                   <span className="truncate max-w-[120px]">{name}</span>
                   <button
                     onClick={(e) => { e.stopPropagation(); closeFile(path); }}
@@ -85,7 +86,7 @@ function FileTree({ path, depth, onSelect }: { path: string; depth: number; onSe
         className="flex items-center gap-1 px-2 py-0.5 text-xs text-claw-text hover:bg-claw-surface-alt w-full text-left"
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
       >
-        <FileIcon name={node.name} size={12} />
+        <FileIcon name={node.name} />
         <span className="truncate">{node.name}</span>
       </button>
     );
@@ -99,7 +100,7 @@ function FileTree({ path, depth, onSelect }: { path: string; depth: number; onSe
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
       >
         {expanded ? <ChevronDown size={12} className="text-claw-muted" /> : <ChevronRight size={12} className="text-claw-muted" />}
-        {expanded ? <FolderOpen size={12} className="text-claw-orange" /> : <Folder size={12} className="text-claw-orange" />}
+        <XPIcon name={expanded ? 'folder-opened' : 'folder-closed'} size={16} />
         <span className="truncate">{node.name}</span>
       </button>
       {expanded && items.map((child) => (
@@ -143,24 +144,25 @@ function FileContent({ path }: { path: string }) {
   );
 }
 
-function FileIcon({ name, size = 14 }: { name: string; size?: number }) {
+function FileIcon({ name }: { name: string }) {
   const ext = name.split('.').pop()?.toLowerCase() || '';
-  const colorMap: Record<string, string> = {
-    js: 'text-claw-yellow',
-    ts: 'text-claw-blue',
-    tsx: 'text-claw-blue',
-    jsx: 'text-claw-yellow',
-    py: 'text-claw-green',
-    html: 'text-claw-orange',
-    css: 'text-claw-purple',
-    md: 'text-claw-text',
-    json: 'text-claw-yellow',
-    txt: 'text-claw-muted',
-    csv: 'text-claw-green',
-    env: 'text-claw-red',
-    log: 'text-claw-muted',
+  const iconMap: Record<string, string> = {
+    js: 'java-script',
+    ts: 'java-script',
+    tsx: 'java-script',
+    jsx: 'java-script',
+    py: 'generic-document',
+    html: 'html',
+    css: 'css',
+    md: 'generic-text-document',
+    json: 'generic-document',
+    txt: 'generic-text-document',
+    csv: 'generic-document',
+    env: 'generic-document',
+    log: 'generic-document',
+    xml: 'xml',
   };
-  return <File size={size} className={colorMap[ext] || 'text-claw-muted'} />;
+  return <XPIcon name={iconMap[ext] || 'generic-document'} size={16} />;
 }
 
 function getLineColor(line: string, ext: string): string {
