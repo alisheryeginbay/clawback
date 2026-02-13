@@ -134,7 +134,7 @@ export function StartScreen() {
           You are the AI now.
         </div>
         <div className="text-white/30 text-[10px]">
-          Clawback v0.1 — Papers, Please meets Claude
+          Claws v0.1 — Papers, Please meets Claude
         </div>
       </div>
     </div>

@@ -62,8 +62,8 @@ export async function POST(req: NextRequest) {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://clawback.dev',
-        'X-Title': 'Clawback',
+        'HTTP-Referer': 'https://claws.dev',
+        'X-Title': 'Claws',
       },
       body: JSON.stringify(fetchBody),
       signal: controller.signal,

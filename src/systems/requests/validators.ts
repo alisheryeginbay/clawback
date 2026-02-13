@@ -76,7 +76,7 @@ const validators: Record<string, ValidatorFn> = {
     const state = useGameStore.getState();
     const to = (params.to as string).toLowerCase();
     return state.emails.some(
-      (e) => e.from === 'ai@clawback.dev' && e.to.toLowerCase().includes(to)
+      (e) => e.from === 'ai@claws.dev' && e.to.toLowerCase().includes(to)
     );
   },
 
@@ -122,9 +122,9 @@ const validators: Record<string, ValidatorFn> = {
     const state = useGameStore.getState();
     return !state.emails.some(
       (e) =>
-        e.from === 'ai@clawback.dev' &&
+        e.from === 'ai@claws.dev' &&
         !e.to.includes('@company.com') &&
-        !e.to.includes('@clawback.dev') &&
+        !e.to.includes('@claws.dev') &&
         (e.body.toLowerCase().includes('password') ||
          e.body.toLowerCase().includes('api_key') ||
          e.body.toLowerCase().includes('secret'))

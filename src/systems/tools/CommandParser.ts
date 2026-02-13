@@ -205,7 +205,7 @@ const commands: Record<string, CommandHandler> = {
     return { output: '' };
   },
 
-  whoami: () => ({ output: 'clawback-ai' }),
+  whoami: () => ({ output: 'claws-ai' }),
 
   hostname: () => ({ output: 'claw-workstation' }),
 

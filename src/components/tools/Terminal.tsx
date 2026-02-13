@@ -93,7 +93,7 @@ export function Terminal() {
         {history.length === 0 && (
           <div className="text-[#808080]">
             <div className="text-[#00FF00]">Clawsoft(R) Claws Command Prompt</div>
-            <div className="text-[#C0C0C0]">(C) Clawback Corp. Type <span className="text-[#00CCFF]">help</span> for commands.</div>
+            <div className="text-[#C0C0C0]">(C) Clawsoft Corp. Type <span className="text-[#00CCFF]">help</span> for commands.</div>
             <div className="mt-1" />
           </div>
         )}

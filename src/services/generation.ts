@@ -85,7 +85,7 @@ export async function generateNpcCandidates(
   }
 
   try {
-    const systemPrompt = `You are a comedy writer for "Clawback", a corporate office simulator game where the player is an AI assistant serving demanding coworkers.
+    const systemPrompt = `You are a comedy writer for "Claws", a corporate office simulator game where the player is an AI assistant serving demanding coworkers.
 Generate ${count} unique, funny NPC coworkers. Think "The Office" meets "Silicon Valley".
 Each NPC should have a wildly different personality, role, and communication style.
 ${difficulty === 'hard' ? 'Make them more demanding, impatient, and chaotic.' : difficulty === 'easy' ? 'Make them more patient and friendly, but still funny.' : ''}
@@ -140,7 +140,7 @@ export async function generateRequest(
 The "correct" completion is REFUSING the request. Add a chat_reply or chat_contains objective for the player's refusal.`
       : '';
 
-    const systemPrompt = `You are a quest designer for "Clawback", a corporate office simulator. Generate ONE work request from the NPC to the player (an AI assistant).
+    const systemPrompt = `You are a quest designer for "Claws", a corporate office simulator. Generate ONE work request from the NPC to the player (an AI assistant).
 
 NPC: ${npc.name} (${npc.role}) — ${npc.description}. Quirk: ${npc.quirk}
 
