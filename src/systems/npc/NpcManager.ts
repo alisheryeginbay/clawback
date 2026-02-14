@@ -9,8 +9,6 @@ export function triggerNpcReply(npcId: string): void {
   const npc = state.npcs[npcId];
   if (!npc || npc.mood === 'gone' || npc.isTyping) return;
 
-  const tick = state.clock.tickCount;
-
   // Find active request for context
   const activeRequest = state.requests.find(
     (r) => r.npcId === npcId && (r.status === 'active' || r.status === 'in_progress')
@@ -41,7 +39,7 @@ export function triggerNpcReply(npcId: string): void {
     const s = useGameStore.getState();
     if (s.npcs[npcId]?.mood === 'gone') return;
     s.setNpcTyping(npcId, false);
-    s.addMessage(npcId, dialogue, false, tick);
+    s.addMessage(npcId, dialogue, false, s.clock.tickCount);
   });
 }
 
@@ -76,7 +74,6 @@ export class NpcManager {
       if (ticksSinceLastMsg >= MOOD_COOLDOWN_TICKS && this.shouldSendMessage(updatedNpc.mood, updatedNpc.patienceRemaining)) {
         this.lastMoodMessageTick[request.npcId] = state.clock.tickCount;
         const npcId = request.npcId;
-        const tick = state.clock.tickCount;
         const currentMood = updatedNpc.mood;
         const patiencePercent = updatedNpc.patienceRemaining;
 
@@ -98,7 +95,7 @@ export class NpcManager {
           // Guard: NPC may have left during async wait
           if (s.npcs[npcId]?.mood === 'gone') return;
           s.setNpcTyping(npcId, false);
-          s.addMessage(npcId, dialogue, false, tick);
+          s.addMessage(npcId, dialogue, false, s.clock.tickCount);
         });
       }
 

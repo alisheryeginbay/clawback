@@ -9,7 +9,7 @@ import { triggerNpcReply } from '@/systems/npc/NpcManager';
 
 const MOOD_LABELS: Record<NpcMood, string> = {
   neutral: 'online',
-  waiting: 'typing...',
+  waiting: 'online',
   frustrated: 'online',
   angry: 'online',
   gone: '',
