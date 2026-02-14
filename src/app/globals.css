@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Fixedsys Excelsior';
+  src: url('/fonts/FSEX302.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   /* === Windows XP Luna Blue === */
 
@@ -43,6 +51,7 @@
 
   /* Fonts */
   --font-mono: 'Lucida Console', 'Consolas', ui-monospace, monospace;
+  --font-terminal: 'Fixedsys Excelsior', 'Lucida Console', 'Consolas', ui-monospace, monospace;
   --font-xp: 'Tahoma', 'Segoe UI', 'Arial', sans-serif;
   --font-xp-title: 'Trebuchet MS', 'Tahoma', 'Segoe UI', sans-serif;
 }
@@ -448,24 +457,7 @@ body {
   animation: typewriter 0.5s steps(30) forwards;
 }
 
-/* XP window entrance */
-@keyframes xp-window-in {
-  0% { transform: scale(0.92); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
 
-.xp-window-in {
-  animation: xp-window-in 0.2s ease-out forwards;
-}
-
-/* Keep aliases */
-.hud-panel-in {
-  animation: xp-window-in 0.2s ease-out forwards;
-}
-
-.crt-on {
-  animation: xp-window-in 0.2s ease-out forwards;
-}
 
 /* Screen shake */
 @keyframes screen-shake {
@@ -586,26 +578,6 @@ body {
 }
 
 /* === XP BOOT SCREEN === */
-
-/* Progress bar - three blue blocks sliding left to right.
-   Blocks start off-screen left (-100%) and slide to 500% (5x container width)
-   so they traverse the full track before looping. */
-@keyframes xp-boot-progress {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(500%); }
-}
-
-.xp-boot-block {
-  animation: xp-boot-progress 2s linear infinite;
-}
-
-.xp-boot-block:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.xp-boot-block:nth-child(3) {
-  animation-delay: 0.3s;
-}
 
 /* Boot screen fade to black */
 @keyframes xp-boot-fade-out {
