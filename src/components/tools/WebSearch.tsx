@@ -1,15 +1,9 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { XPIcon } from '@/components/ui/XPIcon';
 
 const HOME_URL = 'https://www.msn.com';
-
-// Proxy through our API route which fetches sites directly
-// and strips X-Frame-Options/CSP headers so pages load in the iframe
-function browseUrl(url: string): string {
-  return '/api/browse?url=' + encodeURIComponent(url);
-}
 
 interface HistoryEntry {
   url: string;
@@ -69,19 +63,6 @@ export function WebSearch() {
     setStatusText('Done');
     setLoadProgress(100);
   }, []);
-
-  // Listen for postMessage from the injected proxy script inside the iframe.
-  // When user clicks a link or submits a form inside a proxied page,
-  // the iframe sends { type: 'ie-navigate', url } and we handle it here.
-  useEffect(() => {
-    const handler = (e: MessageEvent) => {
-      if (e.data?.type === 'ie-navigate' && typeof e.data.url === 'string') {
-        navigateTo(e.data.url);
-      }
-    };
-    window.addEventListener('message', handler);
-    return () => window.removeEventListener('message', handler);
-  }, [navigateTo]);
 
   const goBack = useCallback(() => {
     if (historyIndex > 0) {
@@ -251,7 +232,7 @@ export function WebSearch() {
         {currentUrl ? (
           <iframe
             ref={iframeRef}
-            src={browseUrl(currentUrl)}
+            src={currentUrl}
             onLoad={handleIframeLoad}
             onError={handleIframeLoad}
             className="w-full h-full border-none"
