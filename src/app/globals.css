@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Fixedsys Excelsior';
+  src: url('/fonts/FSEX302.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   /* === Windows XP Luna Blue === */
 
@@ -43,6 +51,7 @@
 
   /* Fonts */
   --font-mono: 'Lucida Console', 'Consolas', ui-monospace, monospace;
+  --font-terminal: 'Fixedsys Excelsior', 'Lucida Console', 'Consolas', ui-monospace, monospace;
   --font-xp: 'Tahoma', 'Segoe UI', 'Arial', sans-serif;
   --font-xp-title: 'Trebuchet MS', 'Tahoma', 'Segoe UI', sans-serif;
 }

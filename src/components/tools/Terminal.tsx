@@ -39,7 +39,9 @@ export function Terminal() {
 
     const result = executeCommand(input, cwd);
 
-    addTerminalEntry(input, result.output, cwd, tick, result.isError);
+    if (input.trim().toLowerCase() !== 'clear') {
+      addTerminalEntry(input, result.output, cwd, tick, result.isError);
+    }
 
     if (result.newCwd) {
       setTerminalCwd(result.newCwd);
@@ -85,18 +87,16 @@ export function Terminal() {
 
   return (
     <div
-      className="h-full flex flex-col bg-[#000000] font-mono text-sm"
+      className="h-full flex flex-col bg-[#000000] font-terminal text-sm"
       onClick={() => inputRef.current?.focus()}
     >
       {/* Terminal output */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-1">
-        {history.length === 0 && (
-          <div className="text-[#808080]">
-            <div className="text-[#00FF00]">Clawsoft(R) Claws Command Prompt</div>
-            <div className="text-[#C0C0C0]">(C) Clawsoft Corp. Type <span className="text-[#00CCFF]">help</span> for commands.</div>
-            <div className="mt-1" />
-          </div>
-        )}
+        <div className="text-[#808080]">
+          <div className="text-[#00FF00]">Clawsoft(R) Claws Command Prompt</div>
+          <div className="text-[#C0C0C0]">(C) Clawsoft Corp. Type <span className="text-[#00CCFF]">help</span> for commands.</div>
+          <div className="mt-1" />
+        </div>
 
         {history.map((entry, idx) => {
           const isLatest = idx === history.length - 1;
@@ -108,7 +108,7 @@ export function Terminal() {
               </div>
               {entry.output && (
                 <pre
-                  className={`whitespace-pre-wrap break-words text-xs leading-relaxed mt-0.5 ${
+                  className={`whitespace-pre-wrap break-words font-terminal text-xs leading-relaxed mt-0.5 ${
                     entry.isError ? 'text-claw-red' : 'text-[#C0C0C0]/80'
                   } ${isLatest ? 'terminal-reveal' : ''}`}
                   dangerouslySetInnerHTML={{
@@ -131,12 +131,11 @@ export function Terminal() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent text-[#C0C0C0] text-sm font-mono border-none outline-none caret-[#C0C0C0] ml-1"
+            className="flex-1 bg-transparent text-[#C0C0C0] text-sm font-terminal border-none outline-none caret-[#C0C0C0] ml-1"
             autoFocus
             spellCheck={false}
             autoComplete="off"
           />
-          <span className="w-2 h-4 bg-[#C0C0C0] cursor-blink" />
         </div>
       </form>
     </div>
